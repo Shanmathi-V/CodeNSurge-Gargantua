@@ -42,6 +42,15 @@ app.get("/stock-market", async (req, res) => {
   res.status(result.status).json(result);
 });
 
+app.get("/all-news", async (req, res) => {
+  let pageSize = parseInt(req.query.pageSize) || 80;
+  let page = parseInt(req.query.page) || 1;
+  let q = req.query.q || 'world'; 
+  let url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(q)}&page=${page}&pageSize=${pageSize}&apiKey=${process.env.NEW_API_KEY}`;
+  const result = await makeApiRequest(url);
+  res.status(result.status).json(result);
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
